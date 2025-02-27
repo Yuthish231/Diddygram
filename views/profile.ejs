@@ -3,46 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Profile</title>
 </head>
-<body>
-    <h1>Hello <%=user.name%>👋</h1>
-    <h4>Create new post</h4>
-    <form action="/post" method="post">
-        <label for="post">New Post</label>
-        <input type="text" placeholder="What's on you mind" name="postDesc"><br><br>
-        <label for="image">Image</label>
-        <input type="text" name="image" placeholder="Image URL"><br><br>
-        <button type="submit">Create Post</button><br><br>
-        
-    </form>
-    <a href="/logout">logout</a>
-    <div class="posts">
-        <h4>Your Posts</h4>
-        <div class="postcontainer">
-            <!-- <h5>@somenigga</h5>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos similique ullam iusto odit voluptatum provident sapiente ipsa beatae, vitae eum!</p>
-            <div class="like">
-                <button>like</button>
-                <a href="">edit</a>
-            </div>
-            <h5>@somenigga</h5>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos similique ullam iusto odit voluptatum provident sapiente ipsa beatae, vitae eum!</p>
-            <div class="like">
-                <button>like</button>
-                <a href="">edit</a> -->
-            <% user.posts.reverse().forEach(function(post){ %>
-                <h5>@somenigga</h5>
-                <img src="<%=post.postImage%>" alt="Render Failed" srcset="">
-                <p><%=post.postDesc%></p>
-                <div class="like">
-                <p><%=post.Likes.length%> likes</p>
-                <a href="/like/<%=post._id%>"><%=post.Likes.indexOf(user._id)===-1 ? "Like" : "Unlike" %></a>
-                <a href="/edit/<%=post._id%>">Edit</a>
-            <% })%>
-
-            
+<body class="bg-black text-white transition duration-300" id="theme">
+    <div class="max-w-4xl mx-auto p-4">
+        <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Hello <%= user.name %> 👋</h1>
+            <button id="toggleTheme" class="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600">Switch Mode</button>
         </div>
-    </div>    
+        <h4 class="mt-4 text-lg font-semibold">Create new post</h4>
+        <form action="/post" method="post" class="mt-2">
+            <input type="text" name="postDesc" placeholder="What's on your mind" 
+                class="w-full p-2 bg-gray-800 rounded text-white outline-none" required>
+            <input type="text" name="image" placeholder="Image URL" 
+                class="w-full p-2 bg-gray-800 rounded text-white outline-none mt-2" required>
+            <button type="submit" class="mt-3 bg-blue-500 px-4 py-2 rounded hover:bg-blue-600">Create Post</button>
+        </form>
+        <a href="/logout" class="block mt-4 text-red-400">Logout</a>
+        <div class="mt-6">
+            <h4 class="text-xl font-semibold">Your Posts</h4>
+            <div class="grid grid-cols-3 gap-4 mt-4">
+                <% user.posts.reverse().forEach(function(post){ %>
+                    <div class="bg-gray-900 p-4 rounded-lg">
+                        <h5 class="text-sm text-gray-400">@<%= user.username %></h5>
+                        <% if (post.postImage) { %>
+                            <div class="relative cursor-pointer" onclick="toggleZoom(this)">
+                                <img src="<%= post.postImage %>" alt="Post Image" class="w-full h-48 object-cover rounded transition-transform duration-300">
+                            </div>
+                        <% } %>
+                        <p class="mt-2"><%= post.postDesc %></p>
+                        <div class="flex items-center justify-between mt-3">
+                            <p class="text-gray-400"><%= post.Likes.length %> likes</p>
+                            <div class="space-x-4">
+                                <a href="/like/<%= post._id %>" class="text-blue-400 hover:underline">
+                                    <%= post.Likes.indexOf(user._id) === -1 ? "Like" : "Unlike" %>
+                                </a>
+                                <a href="/edit/<%= post._id %>" class="text-yellow-400 hover:underline">Edit</a>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+    <script>
+        const themeToggle = document.getElementById("toggleTheme");
+        const body = document.getElementById("theme");
+        themeToggle.addEventListener("click", () => {
+            if (body.classList.contains("bg-black")) {
+                body.classList.replace("bg-black", "bg-white");
+                body.classList.replace("text-white", "text-black");
+            } else {
+                body.classList.replace("bg-white", "bg-black");
+                body.classList.replace("text-black", "text-white");
+            }
+        });
+        function toggleZoom(element) {
+            const img = element.querySelector("img");
+            if (img.classList.contains("h-48")) {
+                img.classList.replace("h-48", "h-96");
+            } else {
+                img.classList.replace("h-96", "h-48");
+            }
+        }
+    </script>
 </body>
 </html>

@@ -3,16 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Edit Post</title>
 </head>
-<body>
-    <form action="/update/<%=post._id%>" method="post">
-        <label for="postDesc">Edit Description</label>
-        <input type="text" placeholder="Edit" name="postDesc" value="<%=post.postDesc%>"><br><br>
-        <img src="<%=post.postImage%>" alt="" srcset=""><br><br><br>
-        <label for="postImage">Edit Image</label>
-        <input type="text" name="postImage" id="" value="<%=post.postImage%>"><br><br>
-        <button type="submit">Update</button>
-    </form>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-2xl font-semibold mb-4 text-center">Edit Post</h2>
+        
+        <form action="/update/<%=post._id%>" method="post" class="space-y-4">
+            <label class="block font-medium">Edit Description</label>
+            <input type="text" name="postDesc" value="<%=post.postDesc%>" 
+                class="w-full p-2 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+            <div class="flex justify-center">
+                <img src="<%=post.postImage%>" alt="Post Image" id="previewImage" 
+                    class="w-40 h-40 object-cover rounded-lg cursor-pointer hover:scale-105 transition">
+            </div>
+
+            <label class="block font-medium">Edit Image URL</label>
+            <input type="text" name="postImage" id="postImageInput" value="<%=post.postImage%>"
+                class="w-full p-2 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            
+            <button type="submit" 
+                class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
+                Update Post
+            </button>
+            <a href="/profile">Cancel</a>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('previewImage').addEventListener('click', function() {
+            this.classList.toggle('w-96'); 
+            this.classList.toggle('h-96'); 
+        });
+
+        document.getElementById('postImageInput').addEventListener('input', function() {
+            document.getElementById('previewImage').src = this.value;
+        });
+    </script>
 </body>
 </html>

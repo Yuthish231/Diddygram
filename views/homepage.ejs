@@ -3,12 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Home</title>
 </head>
-<body>
-    <h1>Successfully Logged in Nigga!</h1><br><br><br>
-    <a href="/logout">Logout</a><br><br>
-    <a href="/profile">Profile</a>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center">
+    <h1 class="text-3xl font-bold mb-6">Successfully Logged in 🎉</h1>
 
+    <div class="space-x-4">
+        <a href="/profile" 
+            class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+            Profile
+        </a>
+
+        <a href="/logout" 
+            class="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+            Logout
+        </a>
+    </div>
 </body>
 </html>
