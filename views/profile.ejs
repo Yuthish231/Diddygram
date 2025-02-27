@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+    <h1>Hello <%=user.name%>👋</h1>
+    <h4>Create new post</h4>
+    <form action="/post" method="post">
+        <label for="post">New Post</label>
+        <input type="text" placeholder="What's on you mind" name="postDesc"><br><br>
+        <label for="image">Image</label>
+        <input type="text" name="image" placeholder="Image URL"><br><br>
+        <button type="submit">Create Post</button><br><br>
+        
+    </form>
+    <a href="/logout">logout</a>
+    <div class="posts">
+        <h4>Your Posts</h4>
+        <div class="postcontainer">
+            <!-- <h5>@somenigga</h5>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos similique ullam iusto odit voluptatum provident sapiente ipsa beatae, vitae eum!</p>
+            <div class="like">
+                <button>like</button>
+                <a href="">edit</a>
+            </div>
+            <h5>@somenigga</h5>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos similique ullam iusto odit voluptatum provident sapiente ipsa beatae, vitae eum!</p>
+            <div class="like">
+                <button>like</button>
+                <a href="">edit</a> -->
+            <% user.posts.reverse().forEach(function(post){ %>
+                <h5>@somenigga</h5>
+                <img src="<%=post.postImage%>" alt="Render Failed" srcset="">
+                <p><%=post.postDesc%></p>
+                <div class="like">
+                <p><%=post.Likes.length%> likes</p>
+                <a href="/like/<%=post._id%>"><%=post.Likes.indexOf(user._id)===-1 ? "Like" : "Unlike" %></a>
+                <a href="/edit/<%=post._id%>">Edit</a>
+            <% })%>
+
+            
+        </div>
+    </div>    
+</body>
+</html>

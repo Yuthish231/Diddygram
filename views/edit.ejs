@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit</title>
+</head>
+<body>
+    <form action="/update/<%=post._id%>" method="post">
+        <label for="postDesc">Edit Description</label>
+        <input type="text" placeholder="Edit" name="postDesc" value="<%=post.postDesc%>"><br><br>
+        <img src="<%=post.postImage%>" alt="" srcset=""><br><br><br>
+        <label for="postImage">Edit Image</label>
+        <input type="text" name="postImage" id="" value="<%=post.postImage%>"><br><br>
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>
