@@ -6,15 +6,24 @@ const userModel=require('./models/user')
 const bcrypt = require('bcrypt');
 const user = require('./models/user');
 const postModel = require('./models/post');
+const upload=require('./config/multer')
 const app=express()
 
 app.set("view engine","ejs")
+app.use(express.static(path.join(__dirname,"public")))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
 
 app.get("/create",(req,res)=>{
     res.render("create")
+})
+
+app.post("/updateDP",upload.single('dp'),isLoggedIn,async (req,res)=>{
+    let user= await userModel.findOne({email:req.user.email})
+    user.profilepic=req.file.filename; 
+    await user.save()
+    res.redirect("/homepage")
 })
 
 app.post("/register",async (req,res)=>{
@@ -56,9 +65,10 @@ app.post("/login",async (req,res)=>{
 
 })
 
-app.get("/homepage",isLoggedIn,(req,res)=>{ //2nd parameter is a middleware function
+app.get("/homepage",isLoggedIn,async (req,res)=>{ //2nd parameter is a middleware function
     console.log(req.user)
-    res.render("homepage")
+    let user= await userModel.findOne({email:req.user.email})
+    res.render("homepage",{user})
 })
 
 app.get("/logout",(req,res)=>{

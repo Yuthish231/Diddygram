@@ -12,15 +12,36 @@
             <h1 class="text-2xl font-bold">Hello <%= user.name %> 👋</h1>
             <button id="toggleTheme" class="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600">Switch Mode</button>
         </div>
-        <h4 class="mt-4 text-lg font-semibold">Create new post</h4>
+
+        <!-- Profile Picture Section -->
+        <div class="mt-4 flex items-center space-x-4">
+            <% if (user.profilepic) { %>
+                <img src="/images/uploads/<%= user.profilepic %>" alt="Profile Picture" class="w-24 h-24 rounded-full border-4 border-gray-500">
+            <% } else { %>
+                <img src="https://via.placeholder.com/100" alt="Default Profile" class="w-24 h-24 rounded-full border-4 border-gray-500">
+            <% } %>
+            <div>
+                <form action="updateDP" method="post" enctype="multipart/form-data">
+                    <label for="dp" class="block text-sm font-semibold">Update Profile Picture</label>
+                    <input type="file" name="dp" class="mt-1 text-sm">
+                    <button type="submit" class="px-3 py-1 bg-blue-500 text-white rounded mt-2">Update DP</button>
+                </form>
+            </div>
+        </div>
+
+        <h4 class="mt-6 text-lg font-semibold">Create New Post</h4>
         <form action="/post" method="post" class="mt-2">
             <input type="text" name="postDesc" placeholder="What's on your mind" 
                 class="w-full p-2 bg-gray-800 rounded text-white outline-none" required>
             <input type="text" name="image" placeholder="Image URL" 
-                class="w-full p-2 bg-gray-800 rounded text-white outline-none mt-2" required>
+                class="w-full p-2 bg-gray-800 rounded text-white outline-none mt-2">
             <button type="submit" class="mt-3 bg-blue-500 px-4 py-2 rounded hover:bg-blue-600">Create Post</button>
         </form>
+
+        <a href="/homepage" class="block mt-2 text-blue-400">Back to Homepage</a>
         <a href="/logout" class="block mt-4 text-red-400">Logout</a>
+
+        <!-- Posts Section -->
         <div class="mt-6">
             <h4 class="text-xl font-semibold">Your Posts</h4>
             <div class="grid grid-cols-3 gap-4 mt-4">
@@ -47,6 +68,7 @@
             </div>
         </div>
     </div>
+
     <script>
         const themeToggle = document.getElementById("toggleTheme");
         const body = document.getElementById("theme");
@@ -59,6 +81,7 @@
                 body.classList.replace("text-black", "text-white");
             }
         });
+
         function toggleZoom(element) {
             const img = element.querySelector("img");
             if (img.classList.contains("h-48")) {

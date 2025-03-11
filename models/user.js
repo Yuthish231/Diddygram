@@ -13,7 +13,11 @@ const userSchema=mongoose.Schema({
         {type:mongoose.Schema.Types.ObjectId,
             ref:'posts'
         }
-    ]
+    ],
+    profilepic:{
+        type:String,
+        default:'default.jpg'
+    }
 
 })
 

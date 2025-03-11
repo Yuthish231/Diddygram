@@ -7,9 +7,21 @@
     <title>Home</title>
 </head>
 <body class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center">
-    <h1 class="text-3xl font-bold mb-6">Successfully Logged in 🎉</h1>
-
-    <div class="space-x-4">
+    <!-- Profile Picture Display -->
+    <div class="mb-6">
+        <% if (user.profilepic) { %>
+            <img src="/images/uploads/<%= user.profilepic %>" alt="Profile Picture" 
+                class="w-24 h-24 rounded-full border-4 border-gray-500">
+        <% } else { %>
+            <img src="https://via.placeholder.com/100" alt="Default Profile" 
+                class="w-24 h-24 rounded-full border-4 border-gray-500">
+        <% } %>
+    </div>
+    
+    <h1 class="text-3xl font-bold mb-6">Successfully Logged in <%= user.name %> 🎉</h1>
+    <a href="/profile" class="text-blue-400 hover:underline">Update DP</a>
+    
+    <div class="mt-4 space-x-4">
         <a href="/profile" 
             class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
             Profile
