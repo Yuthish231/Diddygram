@@ -8,6 +8,7 @@
 </head>
 <body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
     <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h1 class="text-2xl font-semibold text-center mb-4">Welcome</h1>
         <h2 class="text-2xl font-semibold text-center mb-4">Create Account</h2>
 
         <form action="/register" method="post" class="space-y-4">
@@ -41,5 +42,55 @@
             Already have an account? <a href="/login" class="text-blue-400 hover:underline">Login</a>
         </p>
     </div>
+    <!-- create.ejs -->
+<script>
+    const createAccountForm = document.querySelector('form');
+    createAccountForm.addEventListener('submit', (e) => {
+        const name = document.querySelector('[name="name"]').value;
+        const username = document.querySelector('[name="username"]').value;
+        const email = document.querySelector('[name="email"]').value;
+        const age = document.querySelector('[name="age"]').value;
+        const password = document.querySelector('[name="password"]').value;
+
+        // Name validation (no numbers allowed)
+        const nameRegex = /^[a-zA-Z\s]+$/;
+        if (!nameRegex.test(name)) {
+            e.preventDefault();
+            alert('Name can only contain letters and spaces.');
+            return;
+        }
+
+        // Username validation (alphanumeric, 3-15 characters)
+        const usernameRegex = /^[a-zA-Z0-9]{3,15}$/;
+        if (!usernameRegex.test(username)) {
+            e.preventDefault();
+            alert('Username must be 3-15 characters long and alphanumeric.');
+            return;
+        }
+
+        // Email validation (using regex)
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!emailRegex.test(email)) {
+            e.preventDefault();
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        // Age validation (must be a number between 13 and 120)
+        if (isNaN(age) || age < 13 || age > 120) {
+            e.preventDefault();
+            alert('Age must be a number between 13 and 120.');
+            return;
+        }
+
+        // Password validation (min 6 characters, must contain letters and numbers)
+        const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/;
+        if (!passwordRegex.test(password)) {
+            e.preventDefault();
+            alert('Password must be at least 6 characters long and contain both letters and numbers.');
+            return;
+        }
+    });
+</script>
 </body>
 </html>
